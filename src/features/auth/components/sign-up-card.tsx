@@ -12,17 +12,17 @@ import { useForm } from 'react-hook-form'
 import { FaGoogle } from 'react-icons/fa'
 import { FaGithub } from 'react-icons/fa'
 import { z } from 'zod'
+import { RegisterSchema } from '../schemas'
+import { useRegister } from '../api/use-register'
 
-const formSchema = z.object({
-    name: z.string().min(1, "required"),
-    email: z.string().email(),
-    password: z.string().min(8, "minimum of 8 characters required"),
-})
+
 
 const SignUpCard = () => {
 
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const { mutate } = useRegister();
+
+    const form = useForm<z.infer<typeof RegisterSchema>>({
+        resolver: zodResolver(RegisterSchema),
         defaultValues: {
             name: "",
             email: "",
@@ -30,8 +30,8 @@ const SignUpCard = () => {
         }
     })
 
-    const onSubmit = (values: z.infer<typeof formSchema>) => {
-        console.log({ values });
+    const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
+        mutate(values);
     }
 
 
