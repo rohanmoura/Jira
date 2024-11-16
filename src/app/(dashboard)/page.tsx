@@ -16,8 +16,8 @@ export default async function Home() {
   }
 
   return (
-    <pre className="flex min-h-screen flex-col items-center justify-center py-2">
-      <UserButton />
+    <pre>
+      This is a home page
     </pre>
   );
 }
