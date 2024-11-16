@@ -1,3 +1,4 @@
+"use client";
 
 import DottedSpearator from '@/components/dotted-separator'
 import { Button } from '@/components/ui/button'
@@ -19,7 +20,7 @@ import { useLogin } from '../api/use-login'
 
 const SignInCard = () => {
 
-    const { mutate } = useLogin();
+    const { mutate, isPending } = useLogin();
 
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
@@ -49,7 +50,7 @@ const SignInCard = () => {
                         <FormField name='email' control={form.control} render={({ field }) => (
                             <FormItem>
                                 <FormControl>
-                                    <Input type='email' placeholder='Enter email address' {...field} />
+                                    <Input type='email' placeholder='Enter email address' {...field} disabled={isPending} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -57,12 +58,12 @@ const SignInCard = () => {
                         <FormField name='password' control={form.control} render={({ field }) => (
                             <FormItem>
                                 <FormControl>
-                                    <Input type='password' placeholder='Enter Password' {...field} />
+                                    <Input type='password' placeholder='Enter Password' {...field} disabled={isPending} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
                         )} />
-                        <Button size={"lg"} disabled={false} className='w-full'>
+                        <Button size={"lg"} disabled={isPending} className='w-full'>
                             Login
                         </Button>
                     </form>
@@ -72,11 +73,11 @@ const SignInCard = () => {
                 <DottedSpearator />
             </div>
             <CardContent className='p-7 flex flex-col gap-y-4'>
-                <Button disabled={false} size={"lg"} variant={"secondary"} className='w-full'>
+                <Button disabled={isPending} size={"lg"} variant={"secondary"} className='w-full'>
                     <FaGoogle className='mr-2 size-5' />
                     Login with Google
                 </Button>
-                <Button disabled={false} size={"lg"} variant={"secondary"} className='w-full'>
+                <Button disabled={isPending} size={"lg"} variant={"secondary"} className='w-full'>
                     <FaGithub className='mr-2 size-5' />
                     Login with Github
                 </Button>
