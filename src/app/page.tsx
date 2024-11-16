@@ -1,31 +1,40 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import Image from "next/image";
+import { useCurrent } from "@/features/auth/api/use-current";
+import { useLogout } from "@/features/auth/api/use-logout";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
+
 
 export default function Home() {
+
+  const router = useRouter();
+  const { data, isLoading } = useCurrent();
+  const { mutate: logout } = useLogout();
+
+  useEffect(() => {
+    if (!data && !isLoading) {
+      router.push("/sign-in");
+    }
+  }, [data])
+
   return (
-    <>
-      <Input />
-      <Button variant={"primary"} onClick={() => alert("Hello!")}>
-        Hello World
-      </Button>
-      <Button variant={"destructive"} onClick={() => alert("Hello!")}>
-        Hello World
-      </Button>
-      <Button variant={"secondary"} onClick={() => alert("Hello!")}>
-        Hello World
-      </Button>
-      <Button variant={"ghost"} onClick={() => alert("Hello!")}>
-        Hello World
-      </Button>
-      <Button variant={"muted"} onClick={() => alert("Hello!")}>
-        Hello World
-      </Button>
-      <Button variant={"teritary"} onClick={() => alert("Hello!")}>
-        Hello World
-      </Button>
-    </>
+    <pre className="flex min-h-screen flex-col items-center justify-center py-2">
+        <Button onClick={() => logout()}>
+          LogOut
+        </Button>
+    </pre>
   );
 }
+
+// email
+// : 
+// "convex@gmail.com"
+// name
+// : 
+// "convex"
+// password
+// : 
+// "Convex789456"
