@@ -2,6 +2,7 @@ import { client } from "@/lib/rpc";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { InferRequestType, InferResponseType } from "hono";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 
 
@@ -24,6 +25,7 @@ export const useLogin = () => {
         },
         onSuccess: () => {
             router.refresh();
+            toast.success("Login Successful 💗");
             queryClient.invalidateQueries({ queryKey: ["current"] });
         }
     });
